@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .project-card {
+    @apply bg-zinc-900/70 p-6 rounded-xl border border-zinc-700 hover:shadow-xl transition duration-300 backdrop-blur-md;
+  }
+
+  .card-title {
+    @apply text-xl font-semibold mb-2;
+  }
+
+  .card-desc {
+    @apply text-sm text-zinc-400 mb-4;
+  }
+
+  .card-link {
+    @apply text-blue-400 hover:underline;
+  }
+}
