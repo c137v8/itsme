@@ -1,11 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
-import {
-  FaReact,
-  FaNodeJs,
-  FaPython,
-  FaUnity,
-} from "react-icons/fa";
+import { FaReact, FaNodeJs, FaPython, FaUnity } from "react-icons/fa";
 import { SiCplusplus, SiC } from "react-icons/si";
 
 // Reveal-on-scroll animation wrapper
@@ -38,13 +33,27 @@ function RevealOnScroll({ children }) {
 
 export default function App() {
   const [repos, setRepos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   // Fetch top starred repos from GitHub API
   useEffect(() => {
-    fetch("https://api.github.com/users/c137v8/repos?sort=stars&per_page=5")
-      .then((res) => res.json())
-      .then((data) => setRepos(data))
-      .catch((err) => console.error(err));
+    fetch("https://api.github.com/users/c137v8/repos?sort=stars&per_page=6")
+      .then((res) => {
+        if (!res.ok) throw new Error("GitHub API error");
+        return res.json();
+      })
+      .then((data) => {
+        setRepos(data);
+        setError(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError(true);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   return (
@@ -73,55 +82,70 @@ export default function App() {
       <section id="projects" className="h-screen flex flex-col justify-center items-center px-6">
         <RevealOnScroll>
           <h1 className="text-4xl font-bold mb-6">Top Starred Projects</h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {repos.map((repo) => (
-              <div
-                key={repo.id}
-                className="bg-gray-900 rounded-lg overflow-hidden shadow-lg hover:shadow-purple-500/50 transition-shadow"
-              >
-                <img
-                  src={`https://via.placeholder.com/400x200?text=${repo.name}`}
 
-                  alt={repo.name}
-                  className="w-full h-48 object-cover filter grayscale"
-                />
-                <div className="p-4">
-                  <a
-                    href={repo.html_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-purple-300 hover:text-purple-400 font-semibold text-lg"
-                  >
-                    {repo.name} ⭐ {repo.stargazers_count}
-                  </a>
-                  <p className="text-gray-400 text-sm mt-2">{repo.description || "No description available."}</p>
+          {loading ? (
+            <p className="text-gray-400">Loading projects...</p>
+          ) : error ? (
+            <p className="text-red-400">
+              Failed to load projects. Please try again later.
+            </p>
+          ) : repos.length === 0 ? (
+            <p className="text-gray-400">No projects found.</p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+              {repos.map((repo) => (
+                <div
+                  key={repo.id}
+                  className="bg-gray-900 rounded-lg overflow-hidden shadow-lg hover:shadow-purple-500/50 transition-shadow"
+                >
+                  <img
+                    src="https://raw.githubusercontent.com/c137v8/subsonic_subway/refs/heads/main/graph.png"
+                    alt={repo.name}
+                    className="w-full h-48 object-cover filter grayscale"
+                  />
+                  <div className="p-4">
+                    <a
+                      href={repo.html_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-purple-300 hover:text-purple-400 font-semibold text-lg"
+                    >
+                      {repo.name} ⭐ {repo.stargazers_count}
+                    </a>
+                    <p className="text-gray-400 text-sm mt-2">
+                      {repo.description || "No description available."}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </RevealOnScroll>
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="h-screen flex flex-col justify-center items-center px-6">
-        <RevealOnScroll>
-          <h1 className="text-4xl font-bold mb-6">Skills</h1>
-          <div className="grid grid-cols-3 sm:grid-cols-6 gap-8 text-white-400 text-6xl">
-            <FaUnity title="Unity" />
-            <SiCplusplus title="C++" />
-            <FaPython title="Python" />
-            <SiC title="C" />
-            <FaReact title="React" />
-            <FaNodeJs title="Node.js" />
-          </div>
-        </RevealOnScroll>
-      </section>
+   <section id="skills" className="h-screen flex flex-col justify-center items-center px-6">
+  <RevealOnScroll>
+    <div className="flex flex-col items-center"> {/* Added this wrapper div */}
+      <h1 className="text-4xl font-bold mb-6 text-center">Skills</h1> {/* Added text-center */}
+      <div className="grid grid-cols-3 sm:grid-cols-6 gap-8 text-white-400 text-6xl place-items-center">
+        {/* Added place-items-center to center grid items */}
+        <FaUnity title="Unity" />
+        <SiCplusplus title="C++" />
+        <FaPython title="Python" />
+        <SiC title="C" />
+        <FaReact title="React" />
+        <FaNodeJs title="Node.js" />
+      </div>
+    </div>
+  </RevealOnScroll>
+</section>
 
       {/* Contact Section */}
       <section id="contact" className="h-screen flex flex-col justify-center items-center px-6">
         <RevealOnScroll>
           <h1 className="text-4xl font-bold mb-6">Contact</h1>
-          <p className="text-gray-300">Email: you@example.com</p>
+          <p className="text-gray-300">Email: me@example.com</p>
         </RevealOnScroll>
       </section>
     </div>
