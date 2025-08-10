@@ -94,7 +94,7 @@ export default function App() {
       y: 0,
       transition: {
         delay: i * 0.1,
-        duration: 0.5
+        duration: 1
       }
     })
   };
@@ -121,7 +121,7 @@ export default function App() {
       </AnimatePresence>
 
       {!loading && (
-        <div className="bg-gradient-to-br from-black via-purple-950 to-black text-white min-h-screen font-sans">
+        <div className="bg-[#1a0826] text-white min-h-screen font-sans">
           <nav className="sticky top-0 z-50 bg-black/60 backdrop-blur-lg px-6 py-4 flex justify-center gap-8 border-b border-purple-800 shadow-md">
             <a href="#about" className="hover:text-purple-400 transition duration-300">About</a>
             <a href="#projects" className="hover:text-purple-400 transition duration-300">Projects</a>
@@ -136,35 +136,36 @@ export default function App() {
             variants={sectionVariants}
             viewport={{ once: true, margin: "-100px" }}
           >
-            <h1 className="text-5xl font-bold mb-4 text-purple-300">Hi 👋, I am Ibrahim.</h1>
+            <h1 className="text-5xl font-bold mb-4 text-purple-300">Hi 👋 <br></br>I am Ibrahim,</h1>
             <p className="text-zinc-400 max-w-2xl mx-auto">
-              Im a 3rd year Computer Science Engeerning student at National Institue of Technology, Srinagar.
+              A Computer Science Engeerning student
             </p>
-            <div className="mt-6 flex justify-center gap-10">
-              <motion.a
-                href="https://www.instagram.com/raidmaar"
-                target="_blank"
-                rel="noreferrer"
-                className="text-pink-400 hover:underline"
-                variants={itemVariants}
-                custom={0}
-              >
-                Instagram
-              </motion.a>
-              <motion.a
-                href="https://www.linkedin.com/in/cv8"
-                target="_blank"
-                rel="noreferrer"
-                className="text-blue-400 hover:underline"
-                variants={itemVariants}
-                custom={1}
-              >
-                LinkedIn
-              </motion.a>
-            </div>
+           <div className="mt-6 flex justify-center gap-10">
+  <motion.a
+    href="https://www.instagram.com/raidmaar"
+    target="_blank"
+    rel="noreferrer"
+    className="px-4 py-2 border-2 border-pink-400 rounded-lg text-pink-400 hover:bg-pink-400/20 hover:shadow-[0_0_10px_#ec4899] transition duration-300"
+    variants={itemVariants}
+    custom={0}
+  >
+    Instagram
+  </motion.a>
+  <motion.a
+    href="https://www.linkedin.com/in/cv8"
+    target="_blank"
+    rel="noreferrer"
+    className="px-4 py-2 border-2 border-blue-400 rounded-lg text-blue-400 hover:bg-blue-400/20 hover:shadow-[0_0_10px_#60a5fa] transition duration-300"
+    variants={itemVariants}
+    custom={1}
+  >
+    LinkedIn
+  </motion.a>
+</div>
+
           </motion.section>
 
-          <section id="projects" className="p-10">
+          <section id="projects" className="h-screen p-10">
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -208,7 +209,7 @@ export default function App() {
 
           <motion.section
             id="skills"
-            className="p-10 text-center"
+            className="min-h-screen p-10 text-center"
             initial="hidden"
             whileInView="visible"
             variants={sectionVariants}
