@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { FaReact, FaNodeJs, FaPython, FaUnity } from "react-icons/fa";
+import { FaReact, FaNodeJs, FaPython, FaUnity, FaGuitar, FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
 import { SiCplusplus, SiC } from "react-icons/si";
 
-// Reveal-on-scroll animation wrapper
+// Reveal animation component
 function RevealOnScroll({ children }) {
   const ref = useRef(null);
   const [isInView, setIsInView] = useState(false);
@@ -14,9 +14,7 @@ function RevealOnScroll({ children }) {
       { threshold: 0.2 }
     );
     if (ref.current) observer.observe(ref.current);
-    return () => {
-      if (ref.current) observer.unobserve(ref.current);
-    };
+    return () => ref.current && observer.unobserve(ref.current);
   }, []);
 
   return (
@@ -31,12 +29,155 @@ function RevealOnScroll({ children }) {
   );
 }
 
+// Navbar
+function Navbar() {
+  const links = ["About", "Projects", "Skills", "Contact"];
+  return (
+    <nav className="fixed top-0 left-0 w-full bg-black/80 backdrop-blur z-50 flex justify-center gap-8 py-4 text-lg">
+      {links.map((link) => (
+        <a key={link} href={`#${link.toLowerCase()}`} className="hover:text-purple-400 transition-colors">
+          {link}
+        </a>
+      ))}
+    </nav>
+  );
+}
+
+// About Section
+function About() {
+  return (
+    <section id="about" className="h-screen flex flex-col justify-center items-center px-6">
+      <RevealOnScroll>
+        <div className="flex flex-col items-center text-center">
+          <h1 className="text-6xl font-bold mb-4">I am Ibrahim</h1>
+          <p className="max-w-lg text-gray-300 text-lg">Engineering Student | Developer | Musician</p>
+        </div>
+      </RevealOnScroll>
+    </section>
+  );
+}
+
+// Projects Section
+function Projects({ repos, loading, error }) {
+  return (
+   <section
+  id="projects"
+  className="min-h-screen flex flex-col justify-center items-center px-6 py-20"
+>
+  <RevealOnScroll>
+    <h1 className="text-4xl font-bold mb-10 text-center">Top Starred Projects</h1>
+    {loading ? (
+      <p className="text-gray-400">Loading projects...</p>
+    ) : error ? (
+      <p className="text-red-400">Failed to load projects. Please try again later.</p>
+    ) : repos.length === 0 ? (
+      <p className="text-gray-400">No projects found.</p>
+    ) : (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 w-full max-w-6xl">
+        {repos.map((repo) => (
+          <a
+            key={repo.id}
+            href={repo.html_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-gray-900 rounded-lg overflow-hidden shadow-lg hover:shadow-purple-500/50 transition-shadow group"
+          >
+            <img
+              src="https://raw.githubusercontent.com/c137v8/subsonic_subway/refs/heads/main/graph.png"
+              alt={repo.name}
+              className="w-full h-48 object-cover filter grayscale group-hover:grayscale-0 transition"
+            />
+            <div className="p-4">
+              <h2 className="text-purple-300 group-hover:text-purple-400 font-semibold text-lg">
+                {repo.name} ⭐ {repo.stargazers_count}
+              </h2>
+              <p className="text-gray-400 text-sm mt-2">
+                {repo.description || "No description available."}
+              </p>
+            </div>
+          </a>
+        ))}
+      </div>
+    )}
+  </RevealOnScroll>
+</section>
+
+  );
+}
+
+// Skills Section
+function Skills() {
+  const skills = [
+    { icon: <FaUnity />, name: "Unity" },
+    { icon: <SiCplusplus />, name: "C++" },
+    { icon: <FaPython />, name: "Python" },
+    { icon: <SiC />, name: "C" },
+    { icon: <FaReact />, name: "React" },
+    { icon: <FaNodeJs />, name: "Node.js" },
+  ];
+
+  return (
+    <section
+  id="skills"
+  className="min-h-screen flex flex-col justify-center items-center px-6 py-20"
+>
+  <RevealOnScroll>
+    <h1 className="text-4xl font-bold mb-10 text-center">Skills</h1>
+    <div className="grid grid-cols-3 sm:grid-cols-6 gap-8 text-6xl place-items-center">
+      {skills.map(({ icon, name }, idx) => (
+        <motion.div
+          key={idx}
+          whileHover={{ scale: 1.2, rotate: 5 }}
+          transition={{ type: "spring", stiffness: 200 }}
+          title={name}
+          className="text-white-300 hover:text-white-400 cursor-pointer"
+        >
+          {icon}
+        </motion.div>
+      ))}
+    </div>
+  </RevealOnScroll>
+</section>
+
+  );
+}
+
+// Contact Section
+function Contact() {
+  const socials = [
+    { icon: <FaGithub />, url: "https://github.com/c137v8" },
+    { icon: <FaLinkedin />, url: "https://linkedin.com/in/cv8" },
+    { icon: <FaInstagram />, url: "https://instagram.com/raidmaar" },
+  ];
+
+  return (
+    <section id="contact" className="h-screen flex flex-col justify-center items-center px-6">
+      <RevealOnScroll>
+        <h1 className="text-4xl font-bold mb-6">Contact</h1>
+        <div className="flex gap-6 text-3xl">
+          {socials.map(({ icon, url }, idx) => (
+            <a
+              key={idx}
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white-300 hover:text-white-400 transition-colors"
+            >
+              {icon}
+            </a>
+          ))}
+        </div>
+      </RevealOnScroll>
+    </section>
+  );
+}
+
+// Main App
 export default function App() {
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  // Fetch top starred repos from GitHub API
   useEffect(() => {
     fetch("https://api.github.com/users/c137v8/repos?sort=stars&per_page=6")
       .then((res) => {
@@ -47,107 +188,17 @@ export default function App() {
         setRepos(data);
         setError(false);
       })
-      .catch((err) => {
-        console.error(err);
-        setError(true);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+      .catch(() => setError(true))
+      .finally(() => setLoading(false));
   }, []);
 
   return (
-    <div className="bg-black text-white font-sans">
-      {/* Navbar */}
-      <nav className="fixed top-0 left-0 w-full bg-black/80 backdrop-blur z-50 flex justify-center gap-8 py-4">
-        <a href="#about" className="hover:text-purple-400">About</a>
-        <a href="#projects" className="hover:text-purple-400">Projects</a>
-        <a href="#skills" className="hover:text-purple-400">Skills</a>
-        <a href="#contact" className="hover:text-purple-400">Contact</a>
-      </nav>
-
-      {/* About Section */}
-      <section id="about" className="h-screen flex flex-col justify-center items-center px-6">
-        <RevealOnScroll>
-          <div className="flex flex-col items-center">
-            <h1 className="text-6xl font-bold mb-6">I am Ibrahim</h1>
-            <p className="max-w-lg text-center text-gray-300">
-              Engineering Student | Developer | Musician
-            </p>
-          </div>
-        </RevealOnScroll>
-      </section>
-
-      {/* Projects Section */}
-      <section id="projects" className="h-screen flex flex-col justify-center items-center px-6">
-        <RevealOnScroll>
-          <h1 className="text-4xl font-bold mb-6">Top Starred Projects</h1>
-
-          {loading ? (
-            <p className="text-gray-400">Loading projects...</p>
-          ) : error ? (
-            <p className="text-red-400">
-              Failed to load projects. Please try again later.
-            </p>
-          ) : repos.length === 0 ? (
-            <p className="text-gray-400">No projects found.</p>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-              {repos.map((repo) => (
-                <div
-                  key={repo.id}
-                  className="bg-gray-900 rounded-lg overflow-hidden shadow-lg hover:shadow-purple-500/50 transition-shadow"
-                >
-                  <img
-                    src="https://raw.githubusercontent.com/c137v8/subsonic_subway/refs/heads/main/graph.png"
-                    alt={repo.name}
-                    className="w-full h-48 object-cover filter grayscale"
-                  />
-                  <div className="p-4">
-                    <a
-                      href={repo.html_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-purple-300 hover:text-purple-400 font-semibold text-lg"
-                    >
-                      {repo.name} ⭐ {repo.stargazers_count}
-                    </a>
-                    <p className="text-gray-400 text-sm mt-2">
-                      {repo.description || "No description available."}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </RevealOnScroll>
-      </section>
-
-      {/* Skills Section */}
-   <section id="skills" className="h-screen flex flex-col justify-center items-center px-6">
-  <RevealOnScroll>
-    <div className="flex flex-col items-center"> {/* Added this wrapper div */}
-      <h1 className="text-4xl font-bold mb-6 text-center">Skills</h1> {/* Added text-center */}
-      <div className="grid grid-cols-3 sm:grid-cols-6 gap-8 text-white-400 text-6xl place-items-center">
-        {/* Added place-items-center to center grid items */}
-        <FaUnity title="Unity" />
-        <SiCplusplus title="C++" />
-        <FaPython title="Python" />
-        <SiC title="C" />
-        <FaReact title="React" />
-        <FaNodeJs title="Node.js" />
-      </div>
-    </div>
-  </RevealOnScroll>
-</section>
-
-      {/* Contact Section */}
-      <section id="contact" className="h-screen flex flex-col justify-center items-center px-6">
-        <RevealOnScroll>
-          <h1 className="text-4xl font-bold mb-6">Contact</h1>
-          <p className="text-gray-300">Email: me@example.com</p>
-        </RevealOnScroll>
-      </section>
+    <div className="bg-black text-white font-sans scroll-smooth">
+      <Navbar />
+      <About />
+      <Projects repos={repos} loading={loading} error={error} />
+      <Skills />
+      <Contact />
     </div>
   );
 }
