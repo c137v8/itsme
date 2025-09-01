@@ -1,11 +1,12 @@
 // components/SplashScreen.jsx
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import * as PIXI from "pixijs";
+import * as PIXI from "pixijs"; // ✅ correct import
 
 export default function SplashScreen({ onFinish }) {
   const pixiContainerRef = useRef(null);
   const audioRef = useRef(null);
+  const [isExiting, setIsExiting] = useState(false);
 
   useEffect(() => {
     // Setup PixiJS application
@@ -18,17 +19,17 @@ export default function SplashScreen({ onFinish }) {
 
     pixiContainerRef.current.appendChild(app.view);
 
-    // Draw stick figure
-
-
     // Play music
     if (audioRef.current) {
       audioRef.current.play().catch(() => {});
     }
 
+    // Trigger exit after 3s
     const timer = setTimeout(() => {
-      onFinish();
-    }, 1000);
+      setIsExiting(true);
+      // Wait for fade-out before finishing
+      setTimeout(onFinish, 1000); // 1s = fade duration
+    }, 3000);
 
     return () => {
       clearTimeout(timer);
@@ -37,26 +38,29 @@ export default function SplashScreen({ onFinish }) {
   }, [onFinish]);
 
   return (
-
     <motion.div
-      className="flex h-screen w-screen items-center justify-center bg-black text-white"
+      className="flex h-screen w-screen items-center justify-center bg-black text-white relative"
       initial={{ opacity: 1 }}
-      animate={{ opacity: 1 }}
+      animate={{ opacity: isExiting ? 0 : 1 }}
+      transition={{ duration: 1 }}
     >
       {/* PixiJS Canvas */}
-      <div ref={pixiContainerRef} className="absolute top-0 left-0 w-full h-full" />
+      <div
+        ref={pixiContainerRef}
+        className="absolute top-0 left-0 w-full h-full z-0"
+      />
 
       {/* Audio */}
       <audio ref={audioRef} src="/fixed-d.mp3" preload="auto" loop />
 
       {/* Title overlay */}
       <motion.h1
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1.2, opacity: 1 }}
-        transition={{ duration: 1, yoyo: Infinity }}
-        className="text-3xl font-bold mix-blend-difference "
+        initial={{ scale: 1, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 1,  repeatType: "reverse" }}
+        className="relative z-10 text-3xl font-bold mix-blend-difference text-center px-4"
       >
-        its me
+        🪞 "Magic mirror on the shelf, does it reflect them all or just myself?"
       </motion.h1>
     </motion.div>
   );

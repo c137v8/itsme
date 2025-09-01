@@ -1,7 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+body {
+  background-color: #000000;
+  /* You can also use 'black' */
+}
 @layer components {
   .project-card {
     @apply bg-zinc-900/70 p-6 rounded-xl border border-zinc-700 hover:shadow-xl transition duration-300 backdrop-blur-md;
