@@ -1,0 +1,87 @@
+{
+  "syncedAt": "2026-10-11T03:48:28.099Z",
+  "complete": true,
+  "configHash": "19d75f539e07236b9934ef21a5a1b541e4655159",
+  "projects": [
+    {
+      "repo": "c137v8/AgentEdge",
+      "title": "AgentEdge",
+      "description": "An AI shopping agent that lets users authorize a spending mandate once, then search, cart, and check out entirely through chat — with zero further authentication — powered by Gemini  and the Agentic Commerce Protocol.",
+      "url": "https://github.com/c137v8/AgentEdge",
+      "readmeUrl": "https://github.com/c137v8/AgentEdge/blob/main/README.md",
+      "demo": "https://agentedge-1.onrender.com/landing.html",
+      "image": "https://github.com/user-attachments/assets/5cd39de0-42af-4518-964a-c70acb06e282",
+      "language": "Python",
+      "topics": [
+        "agentic-commerce"
+      ],
+      "stars": 1,
+      "links": []
+    },
+    {
+      "repo": "c137v8/ShellGen",
+      "title": "ShellGen",
+      "description": "ShellGen – A lightweight AI-powered tool that converts natural language instructions into valid Linux shell commands. Simply type or pipe your instructions, and ShellGen generates ready-to-run commands with no extra text or explanations. Ideal for speeding up your terminal workflows and scripting tasks.",
+      "url": "https://github.com/c137v8/ShellGen",
+      "readmeUrl": "https://github.com/c137v8/ShellGen/blob/main/README.md",
+      "demo": null,
+      "image": "https://raw.githubusercontent.com/c137v8/ShellGen/refs/heads/main/Shellgen.png",
+      "language": "Python",
+      "topics": [],
+      "stars": 9,
+      "links": []
+    },
+    {
+      "repo": "c137v8/kShield",
+      "title": "kShield",
+      "description": "kShield: An eBPF Runtime Defense Framework for Linux Kernel Privilege Escalation Attacks",
+      "url": "https://github.com/c137v8/kShield",
+      "readmeUrl": "https://github.com/c137v8/kShield/blob/master/README.md",
+      "demo": null,
+      "image": "https://raw.githubusercontent.com/c137v8/kShield/master/figs/attack_vector_distri_per.png",
+      "language": null,
+      "topics": [],
+      "stars": 0,
+      "links": []
+    },
+    {
+      "repo": "c137v8/Owl-Launcher-",
+      "title": "Owl-Launcher",
+      "description": "Android launher that",
+      "url": "https://github.com/c137v8/Owl-Launcher-",
+      "readmeUrl": "https://github.com/c137v8/Owl-Launcher-/blob/master/README.md",
+      "demo": null,
+      "image": null,
+      "language": null,
+      "topics": [],
+      "stars": 0,
+      "links": []
+    },
+    {
+      "repo": "c137v8/voidframe2",
+      "title": "voidframe2",
+      "description": ".2nd version of void frame",
+      "url": "https://github.com/c137v8/voidframe2",
+      "readmeUrl": "https://github.com/c137v8/voidframe2/blob/main/README.md",
+      "demo": "https://voidframe2.vercel.app",
+      "image": "https://raw.githubusercontent.com/c137v8/voidframe2/main/public/image1.png",
+      "language": "TypeScript",
+      "topics": [],
+      "stars": 0,
+      "links": []
+    },
+    {
+      "repo": "c137v8/CemFormer",
+      "title": "CemFormer",
+      "description": "Research Project",
+      "url": "https://github.com/c137v8/CemFormer",
+      "readmeUrl": "https://github.com/c137v8/CemFormer/blob/main/README.md",
+      "demo": null,
+      "image": null,
+      "language": "Python",
+      "topics": [],
+      "stars": 2,
+      "links": []
+    }
+  ]
+}

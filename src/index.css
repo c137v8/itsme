@@ -1,24 +1,54 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-body {
-  background-color: #000000;
-  /* You can also use 'black' */
+
+@layer base {
+  /* Background lives on <html> so the fixed starfield (z-index -10) paints above it */
+  html {
+    @apply bg-void;
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  body {
+    @apply font-sans text-base text-ink antialiased;
+  }
+  ::selection {
+    @apply bg-accent/25;
+  }
+  :focus-visible {
+    @apply rounded-sm outline outline-2 outline-offset-2 outline-accent;
+  }
 }
+
 @layer components {
-  .project-card {
-    @apply bg-zinc-900/70 p-6 rounded-xl border border-zinc-700 hover:shadow-xl transition duration-300 backdrop-blur-md;
+  /* Static starfield: two tiles at different sizes so the repeat is not obvious */
+  .starfield {
+    @apply pointer-events-none fixed inset-0 -z-10;
+    background-image: url("./assets/stars-a.svg"), url("./assets/stars-b.svg");
+    background-position: 0 0, 310px 190px;
   }
 
-  .card-title {
-    @apply text-xl font-semibold mb-2;
+  /* Small monospace token: neutral, or accent when it is a link */
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded bg-chip px-2.5 py-1 font-mono text-[13px] leading-5 text-ink;
+  }
+  .chip-link {
+    @apply chip border border-accent-line bg-accent-bg text-accent transition-colors hover:border-accent;
+  }
+  .tag {
+    @apply rounded-full border border-accent-line bg-accent-bg px-3 py-1 font-mono text-[13px] text-accent;
   }
 
-  .card-desc {
-    @apply text-sm text-zinc-400 mb-4;
+  .code {
+    @apply rounded bg-chip px-1.5 py-0.5 font-mono text-[0.9em] text-code;
   }
 
-  .card-link {
-    @apply text-blue-400 hover:underline;
+  .prose-link {
+    @apply text-accent underline underline-offset-4 decoration-accent/50 transition-colors hover:decoration-accent;
   }
 }
